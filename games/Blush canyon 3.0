@@ -1,0 +1,328 @@
+task.wait(3)
+
+local function safeLoadWizard()
+    local url = "https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"
+    local ok, lib = pcall(function()
+        return loadstring(game:HttpGet(url))()
+    end)
+    if ok and lib then
+        return lib
+    end
+    return nil
+end
+
+local Library = safeLoadWizard()
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+
+local function getCharacter()
+    if not player then return nil end
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char
+end
+
+local function getHRP()
+    local char = getCharacter()
+    if not char then return nil end
+    return char:FindFirstChild("HumanoidRootPart") or char:WaitForChild("HumanoidRootPart")
+end
+
+local function getHumanoid()
+    local char = getCharacter()
+    if not char then return nil end
+    return char:FindFirstChildOfClass("Humanoid") or char:WaitForChild("Humanoid")
+end
+
+local function safeSetClipboard(text)
+    pcall(function()
+        setclipboard(text)
+    end)
+end
+
+local function setCharacterCollision(character, canCollide)
+    for _, part in ipairs(character:GetDescendants()) do
+        if part:IsA("BasePart") then
+            pcall(function() part.CanCollide = canCollide end)
+        end
+    end
+end
+
+local function clearVelocities(character)
+    for _, part in ipairs(character:GetDescendants()) do
+        if part:IsA("BasePart") then
+            pcall(function()
+                part.Velocity = Vector3.new(0,0,0)
+                if pcall(function() return part.AssemblyLinearVelocity end) then
+                    part.AssemblyLinearVelocity = Vector3.new(0,0,0)
+                end
+                if pcall(function() return part.AssemblyAngularVelocity end) then
+                    part.AssemblyAngularVelocity = Vector3.new(0,0,0)
+                end
+            end)
+        end
+    end
+end
+
+local function safeTeleport(targetCFrame)
+    local char = getCharacter()
+    if not char then return false end
+    local hrp = char:FindFirstChild("HumanoidRootPart")
+    local humanoid = char:FindFirstChildOfClass("Humanoid")
+    if not hrp then return false end
+    if humanoid then
+        pcall(function()
+            humanoid.Sit = false
+            humanoid.PlatformStand = false
+        end)
+    end
+    pcall(function() char.PrimaryPart = hrp end)
+    pcall(function() for _, part in ipairs(char:GetDescendants()) do if part:IsA("BasePart") then part.Anchored = false end end end)
+    setCharacterCollision(char, false)
+    pcall(function() hrp.Velocity = Vector3.new(0,0,0) end)
+    pcall(function() hrp.CFrame = targetCFrame + Vector3.new(0,6,0) end)
+    clearVelocities(char)
+    task.wait(0.08)
+    pcall(function() hrp.Velocity = Vector3.new(0,0,0) end)
+    setCharacterCollision(char, true)
+    if humanoid then
+        pcall(function()
+            humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+            humanoid.PlatformStand = false
+            humanoid.Sit = false
+        end)
+    end
+    task.wait(0.06)
+    pcall(function() hrp.Velocity = Vector3.new(0,0,0) end)
+    return true
+end
+
+local function createWithWizard(lib)
+    local Window = lib:NewWindow("Blush Canyon 3.0")
+
+    local NormalObby = Window:NewSection("Normal Obby")
+    NormalObby:CreateButton("Teleport To Spawn", function()
+        local target = CFrame.new(-706.75, -350.00116, 980)
+        safeTeleport(target)
+    end)
+    NormalObby:CreateButton("Teleport To End", function()
+        local target = CFrame.new(-757, -244.750977, 1316.71643)
+        safeTeleport(target)
+    end)
+
+    local WA1 = Window:NewSection("WA1")
+    WA1:CreateButton("Teleport To Spawn", function()
+        local target = CFrame.new(81.2471924, -349.001923, 996.499939)
+        safeTeleport(target)
+    end)
+    WA1:CreateButton("Teleport To End", function()
+        local target = CFrame.new(
+            107.921387, -280.000092, 972.280579,
+            -0.250432968, 0, 0.968134165,
+            0, 1, 0,
+            -0.968134165, 0, -0.250432968
+        )
+        safeTeleport(target)
+    end)
+
+    local WA2 = Window:NewSection("WA2")
+    WA2:CreateButton("Teleport To Spawn", function()
+        local target = CFrame.new(-273.466858, -348.501556, 1482.92615)
+        safeTeleport(target)
+    end)
+    WA2:CreateButton("Teleport To End", function()
+        local target = CFrame.new(-61.6196289, -295.855957, 1584.2312, -0.173624277, 0, 0.984811902, 0, 1, 0, -0.984811902, 0, -0.173624277)
+        safeTeleport(target)
+    end)
+
+    local WA4 = Window:NewSection("WA3")
+    WA4:CreateButton("Teleport To Spawn", function()
+        local target = CFrame.new(385.750031, -347.671783, 1448.99988)
+        safeTeleport(target)
+    end)
+    WA4:CreateButton("Teleport To End", function()
+        local target = CFrame.new(392.249969, -293.072357, 1538.5, 0,0,-1, 0,1,0, 1,0,0)
+        safeTeleport(target)
+    end)
+
+    local AutoWins = Window:NewSection("AutoWins")
+    AutoWins:CreateButton("Instant Win", function()
+        local running = true
+        StarterGui:SetCore("SendNotification", {Title = "Lua Land", Text = "Reset Character To Stop!", Duration = 5})
+        spawn(function()
+            local locations = {
+                CFrame.new(391.750031, -299.521271, 1552.99988),
+                CFrame.new(-79.1855469, -299.671387, 1592.67651),
+                CFrame.new(114.349243, -286.670135, 974.583374),
+                CFrame.new(-756.016785, -244.671555, 1275.0177)
+            }
+            local index = 1
+            while running do
+                local char = getCharacter()
+                local hrp = char and char:FindFirstChild("HumanoidRootPart")
+                local humanoidNow = char and char:FindFirstChildOfClass("Humanoid")
+                if not hrp or not hrp.Parent then
+                    running = false
+                    break
+                end
+                if humanoidNow then
+                    pcall(function()
+                        humanoidNow.Sit = false
+                        humanoidNow.PlatformStand = false
+                    end)
+                end
+                pcall(function() hrp.Velocity = Vector3.new(0,60,0) end)
+                safeTeleport(locations[index])
+                index = index % #locations + 1
+                task.wait(0.6)
+            end
+        end)
+        player.CharacterRemoving:Connect(function() running = false end)
+    end)
+
+    local Secret = Window:NewSection("Secret")
+    Secret:CreateButton("Secret 1", function()
+        local target = CFrame.new(
+            -779.500061, -242.251541, 1365.21643,
+            0, 0, -1,
+            0, 1, 0,
+            1, 0, 0
+        )
+        safeTeleport(target)
+    end)
+
+    Secret:CreateButton("Secret 2", function()
+        local target = CFrame.new(-868.248413, -330.959259, 1197.96655)
+        safeTeleport(target)
+    end)
+    Secret:CreateButton("Secret 3", function()
+        local target = CFrame.new(
+            -882.94574, -347.011139, 1202.74402,
+            0.5, -0.866025388, -5.86211681e-05,
+            -4.70876694e-05, 4.05311584e-05, -1,
+            0.866025329, 0.5, -2.05039978e-05
+        )
+        safeTeleport(target)
+    end)
+
+    local Slaps = Window:NewSection("Slaps")
+    Slaps:CreateButton("Get Lava Slap", function()
+        local char = getCharacter()
+        if not char then return end
+        local hrp = char:FindFirstChild("HumanoidRootPart")
+        if not hrp then return end
+        local humanoidNow = char:FindFirstChildOfClass("Humanoid")
+        if humanoidNow then
+            pcall(function()
+                humanoidNow.Sit = false
+                humanoidNow.PlatformStand = false
+            end)
+        end
+        local targetCFrame = CFrame.new(
+            -679.016418, -333.809723, 1005.36572,
+            0.0175017118, 0, -0.999846935,
+            0, 1, 0,
+            0.999846935, 0, 0.0175017118
+        )
+        local original = hrp.CFrame
+        safeTeleport(targetCFrame)
+        task.wait(3)
+        safeTeleport(original)
+        StarterGui:SetCore("SendNotification", {Title = "Lua Land Team", Text = "We will return you to your current workspace", Duration = 5})
+    end)
+
+    local antiEnabled = false
+    local antiChildConn = nil
+    local antiCharAddedConn = nil
+
+    Slaps:CreateButton("Anti-Slap", function()
+        antiEnabled = not antiEnabled
+        if antiEnabled then
+            local localplr = game.Players.LocalPlayer
+            local function dobv(v,char)
+                local undo = false
+                if antiEnabled then
+                    if v:IsA("BodyAngularVelocity") then
+                        undo = true
+                        pcall(function() v:Destroy() end)
+                    elseif v:IsA("BodyGyro") and v.MaxTorque ~= Vector3.new(8999999488, 8999999488, 8999999488) and v.D ~= 500 and v.D ~= 50 and v.P ~= 90000 then
+                        undo = true
+                        pcall(function() v:Destroy() end)
+                    elseif v:IsA("BodyVelocity") and v.MaxForce ~= Vector3.new(8999999488, 8999999488, 8999999488) and v.Velocity ~= Vector3.new(0,0,0) then
+                        undo = true
+                        pcall(function() v:Destroy() end)
+                    elseif v:IsA("BasePart") then
+                        pcall(function()
+                            v.ChildAdded:Connect(function(v2)
+                                dobv(v2,char)
+                            end)
+                        end)
+                    end
+                    if undo and char and char:FindFirstChild("Humanoid") then
+                        pcall(function()
+                            char.Humanoid.Sit = false
+                            char.Humanoid.PlatformStand = false
+                        end)
+                    end
+                end
+            end
+            local function dc(c)
+                for _,v in pairs(c:GetChildren()) do
+                    dobv(v,c)
+                end
+                antiChildConn = c.ChildAdded:Connect(function(v)
+                    dobv(v,c)
+                end)
+            end
+            if localplr.Character then
+                dc(localplr.Character)
+            end
+            antiCharAddedConn = localplr.CharacterAdded:Connect(dc)
+        else
+            if antiChildConn then
+                pcall(function() antiChildConn:Disconnect() end)
+                antiChildConn = nil
+            end
+            if antiCharAddedConn then
+                pcall(function() antiCharAddedConn:Disconnect() end)
+                antiCharAddedConn = nil
+            end
+        end
+    end)
+
+    local Killbrick = Window:NewSection("Killbrick Mod")
+    Killbrick:CreateButton("Destroy", function()
+        local function isKillBrick(part)
+            if part:IsA("BasePart") then
+                local color = part.Color
+                local name = part.Name:lower()
+                return color == Color3.fromRGB(255, 0, 0) or name:find("kill") or name:find("lava") or name:find("death")
+            end
+            return false
+        end
+        for _, part in ipairs(workspace:GetDescendants()) do
+            if isKillBrick(part) then
+                pcall(function() part:Destroy() end)
+            end
+        end
+    end)
+
+    local Credits = Window:NewSection("Credits")
+    Credits:CreateButton("By: Lua Land TeamÂ®", function()
+        StarterGui:SetCore("SendNotification", {Title = "Credits", Text = "By: Lua Land TeamÂ®", Duration = 3})
+    end)
+    Credits:CreateButton("Helper: Eric_3337", function()
+        StarterGui:SetCore("SendNotification", {Title = "Credits", Text = "Helper: Eric_3337", Duration = 3})
+    end)
+    Credits:CreateButton("Join Discord", function()
+        safeSetClipboard("discord.gg/EHhKBYhaRd")
+        StarterGui:SetCore("SendNotification", {Title = "Lua Land", Text = "COPIED!", Duration = 3})
+    end)
+end
+
+if Library then
+    createWithWizard(Library)
+else
+    StarterGui:SetCore("SendNotification", {Title = "Error", Text = "Wizard UI Library failed to load, contact the owner or re-execute the script.", Duration = 4})
+end
