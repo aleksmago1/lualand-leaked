@@ -1,0 +1,151 @@
+local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Slap Tower X | Lua Land Hub",
+    LoadingTitle = "Slap Tower X",
+    LoadingSubtitle = "Developed By Lua Land Team",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = "LuaLandHub",
+        FileName = "SlapTowerX"
+    },
+    KeySystem = false
+})
+
+-- Tabs with Lucide icons
+local Home = Window:CreateTab("Home", "home")
+local Changelogs = Window:CreateTab("Changelogs", "list")
+local Main = Window:CreateTab("Main", "gamepad")
+local Extra = Window:CreateTab("Extra", "plus-circle")
+local SourceCode = Window:CreateTab("Source Code", "code")
+local Credits = Window:CreateTab("Credits", "users")
+
+task.spawn(function()
+    wait(1)
+    game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
+        Text = "Developed By Lua Land Team!",
+        Color = Color3.fromRGB(255,255,255),
+        Font = Enum.Font.SourceSansBold,
+        FontSize = Enum.FontSize.Size24
+    })
+    wait(2)
+    game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
+        Text = "Roblox username: shewithepanda",
+        Color = Color3.fromRGB(255,255,255),
+        Font = Enum.Font.SourceSansBold,
+        FontSize = Enum.FontSize.Size24
+    })
+    wait(2)
+    game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
+        Text = "Thank you for using!",
+        Color = Color3.fromRGB(255,255,255),
+        Font = Enum.Font.SourceSansBold,
+        FontSize = Enum.FontSize.Size24
+    })
+end)
+
+Home:CreateSection("About Me")
+Home:CreateLabel("Username: " .. game.Players.LocalPlayer.Name)
+Home:CreateLabel("UserId: " .. game.Players.LocalPlayer.UserId)
+Home:CreateLabel("Account Age: " .. game.Players.LocalPlayer.AccountAge .. " days")
+
+Changelogs:CreateSection("What's New?")
+Changelogs:CreateLabel("[ + ] Added More Features")
+Changelogs:CreateLabel("[ + ] Fixed Some Bugs")
+Changelogs:CreateLabel("[ + ] UI Updated")
+Changelogs:CreateLabel("[ + ] Fixed Ui Layout")
+
+Main:CreateSection("Main/Troll")
+
+Main:CreateButton({
+    Name = "Teleport to Spawn",
+    Callback = function()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/Angelo-Gitland/3a1afc49ffa7f4892e0990c2c844a159/raw/ede13fd0178ada8700fb6f76f2554e68cec53ccc/Troll%2520Tower%2520X%2520Tp%2520to%2520spawn"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Teleport to End",
+    Callback = function()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/Angelo-Gitland/3fce340d0724f5373ecded8c2461f9bc/raw/2dff501f5957bee7912c2c5b0f5518b805b65e63/Troll%2520Tower%2520X%2520Tp%2520to%2520end%2520script"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Get All Slaps",
+    Callback = function()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/Angelo-Gitland/6930ac4a8a63b9f610c24b8fdb3ab4e8/raw/38f6e3268d0f22183b40ba64ecb4d19f4d2d10e4/Slap%2520Tower%2520X%2520Get%2520All%2520Slap%2520Hand%2520Script"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Slap Nearest Player",
+    Callback = function()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/Angelo-Gitland/0fb9ae4c6c08e00b9ca9d0cd470841ae/raw/269e0d01b7e5880a2ebb5a69c607de7a1dcdb96d/Slap%2520Tower%2520X%2520Slap%2520Nearest%2520Player%2520Script"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Spam Pads",
+    Callback = function()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/Angelo-Gitland/71af912c4934e21d12ea86e7755f8ac7/raw/471b54ee6c39b2caf4ff70d337652000cecdd8a9/Troll%2520Tower%2520X%2520Spam%2520pads"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Spam Troll Button",
+    Callback = function()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/Angelo-Gitland/157a7298fe164eeeb7c5be05c8c20514/raw/2fd8d8a76d43ecb87c55d2aa0803010b4a86fad9/Troll%2520Tower%2520X%2520Spam%2520Troll%2520Button"))()
+    end
+})
+
+Extra:CreateSection("Extra Scripts")
+
+Extra:CreateButton({
+    Name = "Ghost Pad",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/n4ti633z"))()
+    end
+})
+
+Extra:CreateButton({
+    Name = "Invisible",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/3Rnd9rHf"))()
+    end
+})
+
+Extra:CreateButton({
+    Name = "Anti-Slap",
+    Callback = function()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/Angelo-Gitland/51397a03d43c2651fcb43102f715f486/raw/84cb4fd363b26f53da05140435bf71f8a2fcb5a4/Anti-Slap%2520Troll%2520Tower%2520X%2520script"))()
+    end
+})
+
+Extra:CreateButton({
+    Name = "Destroy Pads",
+    Callback = function()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/Angelo-Gitland/2bd3bdfaf33a66bb86e2c3b4ae501925/raw/51df974987f6bfc07926425b9789858212e94a07/Slap%2520X%2520tower%2520Destroy%2520All%2520Pads%2520Script"))()
+    end
+})
+
+SourceCode:CreateSection("Source Code")
+SourceCode:CreateLabel("https://github.com/Angelo-Gitland/Slap-Tower-X-Lua-Land-Source-Code/blob/main/Lua%20Land%20Hub%20%7C%20STXResTeady")
+
+Credits:CreateSection("Credits")
+Credits:CreateLabel("Created By: LLH Lua Land")
+Credits:CreateLabel("Tester: Eric_3337")
+Credits:CreateLabel("UI Idea: BaconDaGoofyCreator")
+Credits:CreateLabel("UI Music & Programmer: Harkinian5")
+
+Credits:CreateButton({
+    Name = "Join Lua Land Team",
+    Callback = function()
+        setclipboard("https://discord.gg/Zame2JAGDr")
+        Rayfield:Notify({
+            Title = "Lua Land Hub",
+            Description = "Copied!",
+            Duration = 5
+        })
+    end
+})
