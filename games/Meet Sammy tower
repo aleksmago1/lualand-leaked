@@ -1,0 +1,175 @@
+local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Meet Sammy Tower | Lua Land Hub",
+    LoadingTitle = "Meet Sammy Tower | Lua Land Hub",
+    LoadingSubtitle = "Developed By Lua Land Team",
+    Theme = "AmberGlow",
+    Icon = "scroll-Text",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = "LuaLandHub",
+        FileName = "Meet Sammy Tower"
+    },
+    KeySystem = false
+})
+
+local Home = Window:CreateTab("Home", "home")
+local Changelogs = Window:CreateTab("Changelogs", "list")
+local Main = Window:CreateTab("Main", "gamepad")
+local Extra = Window:CreateTab("Extra", "plus-circle")
+local Credits = Window:CreateTab("Credits", "users")
+
+Home:CreateSection("About Me")
+Home:CreateLabel("Username: " .. game.Players.LocalPlayer.Name)
+Home:CreateLabel("UserId: " .. game.Players.LocalPlayer.UserId)
+Home:CreateLabel("Account Age: " .. game.Players.LocalPlayer.AccountAge .. " days")
+Home:CreateLabel("Executor: " .. (identifyexecutor and identifyexecutor() or "None"))
+Home:CreateSection("About Game")
+Home:CreateLabel("Game Name: Meet Sammy Tower")
+Home:CreateLabel("Game Id: 14457636780")
+Home:CreateLabel("Server Size: 26")
+
+Changelogs:CreateSection("What's New?")
+Changelogs:CreateLabel("[ + ] Added More Features")
+Changelogs:CreateLabel("[ + ] Fixed Some Bugs")
+Changelogs:CreateLabel("[ + ] UI Updated")
+Changelogs:CreateLabel("[ + ] Fixed Ui Layout")
+
+Main:CreateSection("Main/Troll")
+
+Main:CreateButton({
+    Name = "Teleport to Spawn",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Angelo-Gitland/Unlock-Door-Golden-Slap/refs/heads/main/Teleport%20to%20spawn"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Teleport to End",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Angelo-Gitland/Unlock-Door-Golden-Slap/refs/heads/main/Teleport%20to%20End"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Teleport To Shop",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Angelo-Gitland/Unlock-Door-Golden-Slap/refs/heads/main/Teleport%20to%20shop"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "[MBSTBL] Spam Troll Button",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Angelo-Gitland/Unlock-Door-Golden-Slap/refs/heads/main/Spam%20Troll%20Button"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Spam Pads",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Angelo-Gitland/Unlock-Door-Golden-Slap/refs/heads/main/Spam%20Pads"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Destroy All Pads",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Angelo-Gitland/Unlock-Door-Golden-Slap/refs/heads/main/Destroy%20All%20Pads"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Get Gravity Coil",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Angelo-Gitland/Unlock-Door-Golden-Slap/refs/heads/main/Get%20gravity%20coil"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Get Speed Coil",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Angelo-Gitland/Unlock-Door-Golden-Slap/refs/heads/main/Get%20Speed%20Coil"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Get Fusion Coil",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Ahma174/Tool/refs/heads/main/Fusion%20Coil"))()
+    end
+})
+
+Main:CreateButton({
+    Name = "Automatic Get Cash",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Angelo-Gitland/Unlock-Door-Golden-Slap/refs/heads/main/Automatic%20get%20cash"))()
+    end
+})
+
+Extra:CreateSection("Extra Scripts")
+
+Extra:CreateButton({
+    Name = "Infinite Yield",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+    end
+})
+
+Extra:CreateButton({
+    Name = "Enable Double Jump",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Angelo-Gitland/Unlock-Door-Golden-Slap/refs/heads/main/Double%20Jump"))()
+    end
+})
+
+Extra:CreateButton({
+    Name = "Ghost Pad",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/n4ti633z"))()
+    end
+})
+
+Extra:CreateButton({
+    Name = "Guardian Orb",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Angelo-Gitland/Unlock-Door-Golden-Slap/refs/heads/main/Guardian%20Orb"))()
+    end
+})
+
+Extra:CreateButton({
+    Name = "Unlock Golden Slap Door",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Angelo-Gitland/Unlock-Door-Golden-Slap/refs/heads/main/Golden%20Slap%20Door%20Unlock"))()
+    end
+})
+
+Credits:CreateSection("Credits")
+Credits:CreateLabel("Created By: LLH Lua Land")
+Credits:CreateLabel("Tester: LLH Lua Land & Eric_3337")
+Credits:CreateLabel("UI Idea: Eric_3337")
+
+Credits:CreateButton({
+    Name = "Join Lua Land Team",
+    Callback = function()
+        setclipboard("discord.gg/hWbKjDEZaE")
+        Rayfield:Notify({
+            Title = "Lua Land Hub",
+            Description = "Copied!",
+            Duration = 5
+        })
+    end
+})
+
+Credits:CreateButton({
+    Name = "Join Eric_3337",
+    Callback = function()
+        setclipboard("discord.gg/q8e9qFnZRY")
+        Rayfield:Notify({
+            Title = "Lua Land Hub",
+            Description = "Copied!",
+            Duration = 5
+        })
+    end
+})
