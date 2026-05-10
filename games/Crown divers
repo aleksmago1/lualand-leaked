@@ -1,0 +1,217 @@
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local UIStroke = Instance.new("UIStroke")
+local UICorner = Instance.new("UICorner")
+local Title = Instance.new("TextLabel")
+local TitleIcon = Instance.new("ImageLabel")
+local Subtitle = Instance.new("TextLabel")
+local SubtitleIcon = Instance.new("ImageLabel")
+local Container = Instance.new("Frame")
+local ButtonList = Instance.new("UIListLayout")
+
+ScreenGui.Name = "CrownDiversGUI"
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ResetOnSpawn = false
+
+local function notify(title, desc)
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = title,
+        Text = desc,
+        Duration = 5
+    })
+end
+
+notify("Lua Land", "Reset to stop the action!")
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+MainFrame.BorderSizePixel = 0
+MainFrame.Position = UDim2.new(0.5, -125, 0.5, -160)
+MainFrame.Size = UDim2.new(0, 260, 0, 300)
+MainFrame.Active = true
+MainFrame.Draggable = true
+
+UICorner.CornerRadius = UDim.new(0, 10)
+UICorner.Parent = MainFrame
+
+UIStroke.Color = Color3.fromRGB(255, 255, 255)
+UIStroke.Thickness = 2
+UIStroke.Parent = MainFrame
+
+Title.Name = "Title"
+Title.Parent = MainFrame
+Title.BackgroundTransparency = 1
+Title.Position = UDim2.new(0, 0, 0, 10)
+Title.Size = UDim2.new(1, 0, 0, 30)
+Title.Font = Enum.Font.GothamBold
+Title.Text = "Crown Divers"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 20
+
+TitleIcon.Name = "TitleIcon"
+TitleIcon.Parent = Title
+TitleIcon.BackgroundTransparency = 1
+TitleIcon.Position = UDim2.new(0, 25, 0.5, -12)
+TitleIcon.Size = UDim2.new(0, 24, 0, 24)
+TitleIcon.Image = "rbxassetid://7733765398"
+
+Subtitle.Name = "Subtitle"
+Subtitle.Parent = MainFrame
+Subtitle.BackgroundTransparency = 1
+Subtitle.Position = UDim2.new(0, 0, 0, 40)
+Subtitle.Size = UDim2.new(1, 0, 0, 20)
+Subtitle.Font = Enum.Font.GothamSemibold
+Subtitle.Text = "Made By LLH Lua Land"
+Subtitle.TextColor3 = Color3.fromRGB(200, 200, 200)
+Subtitle.TextSize = 12
+
+SubtitleIcon.Name = "SubtitleIcon"
+SubtitleIcon.Parent = Subtitle
+SubtitleIcon.BackgroundTransparency = 1
+SubtitleIcon.Position = UDim2.new(0, 35, 0.5, -8)
+SubtitleIcon.Size = UDim2.new(0, 16, 0, 16)
+SubtitleIcon.Image = "rbxassetid://7743876054"
+
+Container.Name = "Container"
+Container.Parent = MainFrame
+Container.BackgroundTransparency = 1
+Container.Position = UDim2.new(0, 10, 0, 80)
+Container.Size = UDim2.new(1, -20, 1, -90)
+
+ButtonList.Parent = Container
+ButtonList.SortOrder = Enum.SortOrder.LayoutOrder
+ButtonList.Padding = UDim.new(0, 10)
+
+local function createButton(name, iconId, callback)
+    local Btn = Instance.new("TextButton")
+    local BtnIcon = Instance.new("ImageLabel")
+    local BtnCorner = Instance.new("UICorner")
+    local BtnStroke = Instance.new("UIStroke")
+
+    Btn.Name = name
+    Btn.Parent = Container
+    Btn.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    Btn.Size = UDim2.new(1, 0, 0, 45)
+    Btn.Font = Enum.Font.Gotham
+    Btn.Text = name
+    Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Btn.TextSize = 13
+    Btn.AutoButtonColor = true
+
+    BtnCorner.CornerRadius = UDim.new(0, 6)
+    BtnCorner.Parent = Btn
+    
+    BtnStroke.Color = Color3.fromRGB(100, 100, 100)
+    BtnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    BtnStroke.Parent = Btn
+
+    BtnIcon.Parent = Btn
+    BtnIcon.BackgroundTransparency = 1
+    BtnIcon.Position = UDim2.new(0, 10, 0.5, -12)
+    BtnIcon.Size = UDim2.new(0, 24, 0, 24)
+    BtnIcon.Image = iconId
+
+    Btn.MouseButton1Click:Connect(callback)
+end
+
+createButton("Auto-Get Crown", "rbxassetid://10723375250", function()
+    local Players = game:GetService("Players")
+    local RunService = game:GetService("RunService")
+    local player = Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    local targetPlayer
+    local following = false
+    local originalPosition = nil
+
+    local function getCrownOwner()
+        for _, plr in pairs(Players:GetPlayers()) do
+            local c = plr.Character
+            if c and c:FindFirstChild("HumanoidRootPart") then
+                if c.HumanoidRootPart:FindFirstChild("Crown") or c:FindFirstChild("Crown") then
+                    return plr
+                end
+            end
+        end
+        return nil
+    end
+
+    RunService.Heartbeat:Connect(function()
+        local currentOwner = getCrownOwner()
+        if currentOwner == player then
+            if following then
+                if originalPosition then hrp.CFrame = originalPosition end
+                following = false
+                targetPlayer = nil
+                originalPosition = nil
+            end
+            return 
+        end
+        if currentOwner and currentOwner ~= player then
+            if not following then
+                originalPosition = hrp.CFrame
+            end
+            targetPlayer = currentOwner
+            following = true
+            if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                hrp.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2) 
+            end
+        end
+    end)
+end)
+
+createButton("Auto-Get Crown (Permanent)", "rbxassetid://10723375250", function()
+    local Players = game:GetService("Players")
+    local RunService = game:GetService("RunService")
+    local player = Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    local SKY_HEIGHT = 250 
+    local MAP_CENTER = Vector3.new(0, 0, 0) 
+    local targetPlayer
+    local following = false
+
+    local function getCrownOwner()
+        for _, plr in pairs(Players:GetPlayers()) do
+            local c = plr.Character
+            if c then
+                if (c:FindFirstChild("HumanoidRootPart") and c.HumanoidRootPart:FindFirstChild("Crown")) or c:FindFirstChild("Crown") then
+                    return plr
+                end
+            end
+        end
+        return nil
+    end
+
+    RunService.Heartbeat:Connect(function()
+        local currentOwner = getCrownOwner()
+        if currentOwner == player then
+            if following then
+                local skyPos = Vector3.new(MAP_CENTER.X, SKY_HEIGHT, MAP_CENTER.Z)
+                hrp.CFrame = CFrame.lookAt(skyPos, MAP_CENTER)
+                following = false
+                targetPlayer = nil
+            end
+            return 
+        end
+        if currentOwner and currentOwner ~= player then
+            targetPlayer = currentOwner
+            following = true
+            if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                hrp.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2)
+            end
+        else
+            following = false
+        end
+    end)
+end)
+
+createButton("Coin Farm", "rbxassetid://10723375250", function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/Angelo-Gitland/ffbafd6f78b2a1e278b21b88d44bc392/raw/ba29c3fc02ea0f48cbadf2eb8ea414121e47cfe8/Crown%2520Divers%2520Coin%2520Farm%2520Script"))()
+end)
+
+createButton("Join Discord", "rbxassetid://7733993311", function()
+    setclipboard("discord.gg/Zame2JAGDr")
+    notify("Lua Land", "Link Copied to clipboard!")
+end)
